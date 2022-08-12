@@ -33,4 +33,4 @@ This is the basic relationship that we are using in this example
         ├── projects.routes.js
         └── tasks.routes.js
 
-7 directories, 15 files
+5 directories, 12 files
