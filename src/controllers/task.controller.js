@@ -44,7 +44,7 @@ export async function updateTask(req, res) {
     }
 }
 
-export async function deleteTasks(req, res) {
+export async function deleteTask(req, res) {
     const {id} = req.params;
     try{
         await Task.destroy({

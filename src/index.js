@@ -13,7 +13,6 @@ async function main(){
     }catch(e){
         console.log("Unable to connect to the database:", e);
     }
-
 };
 
 main();
