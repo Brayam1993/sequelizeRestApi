@@ -18,11 +18,6 @@ This is the basic relationship that we are using in this example
 ```bash
 .
 ├── package.json
-├── requests
-│   ├── projects.http
-│   └── tasks.http
-├── sql
-│   └── db.sql
 └── src
     ├── app.js
     ├── controllers
