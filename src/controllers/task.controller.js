@@ -1,12 +1,21 @@
 import { Task } from "../models/Task.js"
 
-export async function createTask(req, res) {
+export const getTasks = async (req, res) => {
+    try{
+        const tasks = await Task.findAll();
+        res.json(tasks);
+    }catch(e){
+        return res.status(500).json({ message: e.message });
+    }
+}
+
+export const createTask = async (req, res) => {
     try{
         const { name, done, projectId } = req.body;
         const newTask = await Task.create({
-            projectId,
             name,
             done,
+            projectId,
         });
         res.json(newTask);
     }catch(e){
@@ -14,57 +23,42 @@ export async function createTask(req, res) {
     }
 }
 
-export async function getTasks(req, res) {
-    try{
-        const task = await Task.findAll({
-            attributes: ["id","projectId","name","done"],
-            order: [["id","DESC"]],
-        });
-        res.json(tasks);
-    }catch(e){
-        return res.status(500).json({ message: e.message });
-    }
-}
-
-export async function updateTask(req, res) {
+export const getTask = async(req, res) => {
     const { id } = req.params;
     try{
         const task = await Task.findOne({
-            attributes: ["name","projectId","done","id"],
-            where: {id},
+            where: { id },
+            attributes: ["id","projectId","name","done"],
         });
-
-        task.set(req.body);
-
-        await task.save();
-
         res.json(task);
     }catch(e){
         return res.status(500).json({ message: e.message });
     }
 }
 
-export async function deleteTask(req, res) {
-    const {id} = req.params;
+export const updateTask = async (req, res) => {
+    const { id } = req.params;
     try{
-        await Task.destroy({
-            where: { id },
+        const task = await Task.findOne({
+            //attributes: ["name","projectId","done","id"],
+            where: {id},
         });
-
-        return res.sendStatus(204);
+        task.set(req.body);
+        await task.save();
+        return res.json(task);
     }catch(e){
         return res.status(500).json({ message: e.message });
     }
 }
 
-export async function getTask(req, res) {
-    const { id } = req.params;
+export const deleteTask = async (req, res) => {
+    const {id} = req.params;
     try{
-        const task = await Task.findOne({
+        const result = await Task.destroy({
             where: { id },
-            attributes: ["id","projectId","name","done"],
         });
-        res.json(Task);
+        console.log(result);
+        return res.sendStatus(204);
     }catch(e){
         return res.status(500).json({ message: e.message });
     }
