@@ -9,7 +9,22 @@ export const getProjects = async (req, res) => {
     }catch(e){
         return res.status(500).json({message: error.message});
     }
-}
+};
+
+export const getProject = async (req, res) => {
+    
+    try {
+        const { id } = req.params
+            const project = await Project.findOne({
+                where: {
+                    id
+                }
+            })
+            res.json(project);
+    }catch(e){
+        return res.status(500).json({ message: error.message });
+    }
+};
 
 export const createProjects = async (req, res) => {
     const {name, priority, description} = req.body;
@@ -56,4 +71,4 @@ export const deleteProject = async (req, res) => {
     }catch(e){
         return res.status(500).json({ message: error.message });
     }
-}
+};
